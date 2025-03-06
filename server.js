@@ -7,20 +7,21 @@ const userRoutes = require("./routes/users");
 const productRoutes = require("./routes/products");
 const cartRoutes = require("./routes/cart");
 
+app.use(express.static("public")); 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.use("/users", userRoutes);
-app.use("/products", productRoutes);
+app.use("/api/products", productRoutes);
 app.use("/cart", cartRoutes);
 
-app.get("/api/products", (req, res) => {
-    res.sendFile(path.join(__dirname, "views", "index.html"));
-});
+app.use("/addproducts", express.static(path.join(__dirname, "views")));
+
 
 app.get("/", (req, res) => {
     res.send("Welcome to the E-Commerce API!");
 });
-
-
 
 const PORT = 3000;
 app.listen(PORT, () => {
